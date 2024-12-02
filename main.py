@@ -1,22 +1,26 @@
 import numpy as np
 import tensorflow as tf
-import pickle
+#import pickle
 # from scipy import misc
 from io import BytesIO
 from flask import Flask, request, render_template, jsonify
-from flask_pymongo import PyMongo
+#from flask_pymongo import PyMongo
 from PIL import Image
-import io
+#import io
 import warnings
+import gdown
+#import os
 
 warnings.filterwarnings('ignore')
 
+# Download the model from Google Drive
+model_url = 'https://drive.google.com/uc?id=19YH-elrzYgF5jpust1M3ZvCnXLk5v4rJ'
+output = 'final_model.keras'
+gdown.download(model_url, output, quiet=False)
+
 try:
     global model
-    model= tf.keras.models.load_model('final_model.keras')
-    # model.load_weights('my_model_weights.h5')
-    # model = pickle.load(open('Model.pkl', 'rb'))
-
+    model = tf.keras.models.load_model(output)
 except Exception as e:
     print(f"Error loading model: {e}")
 
@@ -25,10 +29,10 @@ class_labels = ['Moderately-differentiated Oral Squamous Cell Carcinoma', 'Norma
 
 app = Flask(__name__)
 
-app.config['MONGO_DBNAME'] = 'patient_database'
-app.config["MONGO_URI"] = 'mongodb://localhost:27017'
+#app.config['MONGO_DBNAME'] = 'patient_database'
+#app.config["MONGO_URI"] = 'mongodb://localhost:27017'
 
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
 
 @app.route('/')
 def home():
