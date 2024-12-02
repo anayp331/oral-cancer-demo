@@ -5,3 +5,4 @@ Pillow==8.3.2
 flask==2.0.1
 gdown
 Werkzeug>=2.2.0
+guinicorn>=20.0
